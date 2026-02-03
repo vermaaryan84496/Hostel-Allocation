@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Rooms</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Smart Hostel – All Rooms</h2>
+
+    <div class="nav">
+        <a href="/">All Rooms</a>
+        <a href="/add-room">Add Room</a>
+        <a href="/search-allocate">Search & Allocate</a>
+    </div>
+
+    <table>
+        <tr>
+            <th>Room No</th>
+            <th>Capacity</th>
+            <th>Occupied</th>
+            <th>Available</th>
+            <th>AC</th>
+            <th>Attached Washroom</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="r : ${rooms}">
+            <td th:text="${r.roomNo}"></td>
+            <td th:text="${r.capacity}"></td>
+            <td th:text="${r.occupied}"></td>
+            <td th:text="${r.availableSeats}"></td>
+            <td th:text="${r.hasAC}"></td>
+            <td th:text="${r.hasAttachedWashroom}"></td>
+
+            <td>
+                <form th:action="@{/delete-room}" method="post"
+                      onsubmit="return confirm('Are you sure you want to delete this room?');">
+
+                    <input type="hidden" name="roomNo"
+                           th:value="${r.roomNo}"/>
+
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search & Allocate</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Search & Allocate Room</h2>
+
+    <div class="nav">
+        <a href="/">All Rooms</a>
+        <a href="/add-room">Add Room</a>
+    </div>
+
+    <!-- Search Panel -->
+    <div class="form-box">
+        <h3>Search Rooms</h3>
+
+        <form th:action="@{/search}" method="post">
+
+            <label>Number of Students</label>
+            <input type="number" name="students" required>
+
+            <label>AC Required</label>
+            <select name="needsAC">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+
+            <label>Attached Washroom Required</label>
+            <select name="needsWashroom">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+
+            <br>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Search Result -->
+    <div th:if="${rooms != null}">
+        <h3>Available Rooms</h3>
+
+        <table>
+            <tr>
+                <th>Room No</th>
+                <th>Available Seats</th>
+                <th>AC</th>
+                <th>Washroom</th>
+            </tr>
+
+            <tr th:each="r : ${rooms}">
+                <td th:text="${r.roomNo}"></td>
+                <td th:text="${r.availableSeats}"></td>
+                <td th:text="${r.hasAC}"></td>
+                <td th:text="${r.hasAttachedWashroom}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Allocate Panel -->
+    <div class="form-box">
+        <h3>Allocate Room</h3>
+
+        <form th:action="@{/allocate}" method="post">
+
+            <label>Number of Students</label>
+            <input type="number" name="students" required>
+
+            <label>AC Required</label>
+            <select name="needsAC">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+
+            <label>Attached Washroom Required</label>
+            <select name="needsWashroom">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+
+            <br>
+            <button type="submit">Allocate</button>
+        </form>
+    </div>
+
+    <!-- Output display panel -->
+    <div class="output-panel" th:if="${message != null}">
+        <span th:text="${message}"></span>
+    </div>
+
+</div>
+
+</body>
+</html>
